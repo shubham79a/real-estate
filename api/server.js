@@ -1,4 +1,6 @@
 import express from "express"
+import cookieParser from "cookie-parser";
+import "dotenv/config"
 import postRouter from "./routes/postRoute.js";
 import authRouter from "./routes/authRoute.js";
 
@@ -6,7 +8,7 @@ import authRouter from "./routes/authRoute.js";
 const app = express();
 
 app.use(express.json())
-
+app.use(cookieParser())
 
 app.get("/", (req, res) => {
     res.send("API Working");
