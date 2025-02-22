@@ -1,9 +1,32 @@
+import { useNavigate } from "react-router-dom";
 import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
+import apiRequest from "../../lib/apiRequest";
 import "./profilePage.scss";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function ProfilePage() {
+
+  const { updateCurrentUser, currentUser } = useContext(AuthContext)
+
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+
+    try {
+      const res = await apiRequest.post("/auth/logout")
+      updateCurrentUser(null)
+      navigate("/")
+
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
   return (
+   
     <div className="profilePage">
       <div className="details">
         <div className="wrapper">
@@ -15,16 +38,17 @@ function ProfilePage() {
             <span>
               Avatar:
               <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src={currentUser.avatar || "../../../public/noavatar.png"}
                 alt=""
               />
             </span>
             <span>
-              Username: <b>John Doe</b>
+              Username: <b>{currentUser.username}</b>
             </span>
             <span>
-              E-mail: <b>john@gmail.com</b>
+              E-mail: <b>{currentUser.email}</b>
             </span>
+            <button onClick={handleLogout}>Logout</button>
           </div>
           <div className="title">
             <h1>My List</h1>
@@ -39,7 +63,7 @@ function ProfilePage() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat/>
+          <Chat />
         </div>
       </div>
     </div>

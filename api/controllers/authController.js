@@ -20,7 +20,7 @@ export const register = async (req, res) => {
                 password: hashedPassword,
             },
         })
-        res.json({ message: "User created successfully" })
+        res.status(201).json({ message: "User created successfully" })
 
 
     } catch (error) {
@@ -64,12 +64,14 @@ export const login = async (req, res) => {
             process.env.JWT_SECRET, { expiresIn: age }
         )
 
+        const { password: userPassword, ...userInfro } = user;
+
         // cookie token 
         res.cookie("token", token, {
             httpOnly: true,
             // secure:true,
             maxAge: age,
-        }).json({ message: "Login successful!" })
+        }).status(200).json({ message: "Login successful!", userInfro })
 
     } catch (error) {
         res.status(500).json({ message: error.message });
