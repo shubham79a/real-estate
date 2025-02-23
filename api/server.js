@@ -5,6 +5,7 @@ import "dotenv/config"
 import postRouter from "./routes/postRoute.js";
 import authRouter from "./routes/authRoute.js";
 import testRouter from "./routes/testRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 
 const app = express();
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/api/posts", postRouter)
 app.use("/api/auth", authRouter)
 app.use("api/test", testRouter)
+app.use("/api/user",userRouter);
 
 app.listen(8800, () => {
     console.log("Server is running!")
