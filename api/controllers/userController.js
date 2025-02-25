@@ -69,7 +69,7 @@ export const updateUser = async (req, res) => {
             data: {
                 ...inputs,
                 ...(updatedPassword && { password: updatedPassword }),
-                ...(avatar && { avatar: avatar })
+                ...(avatar && { avatar })
             }
         })
 
